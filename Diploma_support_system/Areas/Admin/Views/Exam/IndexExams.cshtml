@@ -1,0 +1,80 @@
+﻿@model Diploma_support_system.Models.ViewModels.IndexExamViewModel
+@{
+    ViewData["Title"] = "IndexExams";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<br />
+<br />
+<div class="border backgroundWhiteBorder">
+ 
+    <br />
+    <div>
+        @if (Model.Exam.Count() > 0)
+        {
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        Student
+                    </th>
+                    <th>
+                        Group
+                    </th>
+                    <th>
+                        Promoter
+                    </th>
+                    <th>
+                        Diploma name
+                    </th>
+                    <th>
+                        Reviewer
+                    </th>
+                    <th></th>
+                    <th></th>
+                    @foreach (var item in Model.Exam)
+                    {
+                    <tr>
+                        <td>
+                            @{
+                                var studentFullName = item.Student.Name + " " + item.Student.Surname;
+                                @Html.DisplayFor(m => studentFullName)
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Group.GroupNumber)
+                        </td>
+                        <td>
+                            @{
+                                var promoterFullName = item.Promoter.Name + " " + item.Promoter.Surname;
+                                @Html.DisplayFor(m => promoterFullName)
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Student.DiplomaName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Reviewer)
+                        </td>
+
+                        <td>
+                            <div class="btn-group" role="group">
+
+                                <a class="btn btn-success text-white" asp-action="StudentExam" asp-route-Id="@item.Id">
+                                    <i class="fas fa-list-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                }
+                </table>
+            }
+            else
+            {
+                <p>No Exam exists :p</p>
+            }
+    </div>
+</div>

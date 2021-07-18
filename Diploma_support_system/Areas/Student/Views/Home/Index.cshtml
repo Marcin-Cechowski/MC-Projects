@@ -1,0 +1,87 @@
+﻿@model Diploma_support_system.Models.ViewModels.IndexViewModel
+@using Diploma_support_system.Utility;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+
+<div class="backgroundWhite container" style="background-color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+
+
+
+
+    @if (User.IsInRole(SD.DeanUser))
+    {
+    <div class="backgroundWhite container" style="background-color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+
+
+        @foreach (var promoter in Model.Promoter)
+            {
+        <div class="row" id="menu-wrapper">
+            <partial name="_ThumbNailAreaPartial" model="@Model.Student.Where(u => u.Promoter.Name.Equals(promoter.Name))" />
+        </div>
+            }
+
+    </div>
+    }
+    @if (User.IsInRole(SD.StudentUser))
+    {
+
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-info text-center "> Welcome Student @User.Identity.Name! </h3>
+            <h1 class="text-info text-center "> Create your diploma or pass dipploma exam! </h1>
+        </div>
+
+    </div>
+    <br />
+    <div>
+    </div>
+
+    }
+    @if (User.IsInRole(SD.PromoterUser))
+    {
+
+
+    <div class="row">
+        <div class="col-12">
+            <br />
+            <br />
+            <h3 class="text-info text-center "> Welcome to the Dipploma Support System  @User.Identity.Name! </h3>
+            <h1 class="text-info text-center "> Participate in a whole diploma process!! </h1>
+        </div>
+
+    </div>
+    <br />
+    <div>
+    </div>
+
+
+
+    }
+    @if ((User.Identity.Name) == null && !(User.IsInRole(SD.PromoterUser) && !(User.IsInRole(SD.StudentUser))))
+    {
+
+    <div class="row">
+        <div class="col-12">
+            <br />
+            <br />
+            <h1 class="text-info text-center "> Welcome to the Dipploma Support System! </h1>
+            <br />
+            <h1 class="text-info text-center">Dean user account: admin@gmail.com   password : Admin123* </h1>
+            <h1 class="text-info text-center">Promoter user account: promoter@gmail.com   password : Promoter123* </h1>
+            <h1 class="text-info text-center">Student user account: student@gmail.com   password : Student123* </h1>
+        </div>
+
+    </div>
+    <br />
+    <div>
+    </div>
+
+    }
+
+
+</div>

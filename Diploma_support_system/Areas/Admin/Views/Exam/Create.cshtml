@@ -1,0 +1,220 @@
+﻿@model Diploma_support_system.Models.ViewModels.DiplomaExamViewModel
+@using Diploma_support_system.Extensions
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Create Exam</h2>
+<br />
+
+<form method="post" enctype="multipart/form-data" asp-action="Create">
+    <div class="border backgroundWhiteBorder">
+        <input type="hidden" asp-for="Exam.Id" />
+        <input type="hidden" asp-for="Exam.Student.GroupId" />
+        <input type="hidden" asp-for="Exam.Student.PromoterId" />
+
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.Student.Name" readonly class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Exam.Student.Name" readonly class="form-control" />
+            </div>
+            <span asp-validation-for="Exam.Student.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.Student.Surname" readonly class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Exam.Student.Surname" readonly class="form-control" />
+            </div>
+            <span asp-validation-for="Exam.Student.Surname" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.Student.DiplomaName" readonly class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Exam.Student.DiplomaName" readonly class="form-control" />
+            </div>
+            <span asp-validation-for="Exam.Student.DiplomaName" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.Student.Description" readonly class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                @Html.TextAreaFor(m => m.Exam.Student.Description)
+            </div>
+            <span asp-validation-for="Exam.Student.Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.Student.Diploma" readonly id="ddlDiploma" class="col-form-label"></label>
+            </div>
+
+            <td>
+                <a asp-action="DownloadFile" asp-route-filePath="@Model.Exam.Student.Diploma" asp-route-name="@Model.Exam.Student.Name" asp-route-surname="@Model.Exam.Student.Surname">Download @Model.Exam.Student.Diploma</a>
+            </td>
+
+        </div>
+        @{
+            var promoterFullName = Model.Exam.Student.Promoter.Name + " " + Model.Exam.Student.Promoter.Surname;
+        }
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.Student.PromoterId" readonly class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="@promoterFullName" readonly class="form-control">
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.GroupId" readonly class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="@Model.Exam.Student.Group.GroupNumber" readonly class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.FirstQuestion" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <select asp-for="Exam.FirstQuestion" asp-items="@(new SelectList(ViewBag.Questions))" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.SecoundQuestion" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <select asp-for="Exam.SecoundQuestion" asp-items="@(new SelectList(ViewBag.Questions))" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.ThirdQuestion" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Exam.ThirdQuestion" class="form-control"></input>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.ExamDate" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Exam.ExamDate" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Exam.Reviewer" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <select asp-for="Exam.Reviewer" id="ddlReviewersList" asp-items="@(new SelectList(string.Empty, "Name", "Surname"))" class="form-control"></select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-info form-control" value="Create" asp-route-id="@Model.Exam.Student.Id" />
+                    </div>
+                    <div class="col-6">
+                        <a asp-action="Index" class="btn btn-success form-control"> Back To List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            getGroup();
+            $('#PromoterId').change(function() {
+                getGroup();
+            });
+        });
+
+        function getGroup() {
+            var url = '@Url.Content("~/")' + "Admin/Group/GetGroup";
+            var ddlsource = '#PromoterId';
+            $.getJSON(url, { id: $(ddlsource).val() }, function(data) {
+                var items = '';
+                $('#GroupId').empty();
+                $.each(data,
+                    function(i, group) {
+                        items += "<option value='" + group.value + "'>" + group.text + "</option>";
+                    });
+                $('#GroupId').html(items);
+
+            })
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#ddlDiploma').on("change",
+                function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('#ddlDiploma').html(fileName);
+                });
+        });
+    </script>
+
+
+    <script>
+        function updateReviewer() {
+           
+
+            $list = $('#ddlReviewersList');
+
+            $.ajax({
+                url: '/Admin/Exam/GetReviewer',
+                type: 'GET',
+                dataType: 'text',
+                success: function (data) {
+                    results = JSON.parse(data);
+                    $list.html('');
+           
+                    for (i in results) {
+                        $list.append('<option' + '>' + results[i].value + " " + results[i].text + '</option>');
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            updateReviewer();
+        });
+        $("#ddlStudentId").on("change",
+            function () {
+                updateReviewer();
+            });
+    </script>
+
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

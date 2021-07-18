@@ -1,0 +1,93 @@
+﻿@model Diploma_support_system.Models.ViewModels.IndexExamViewModel
+
+@{
+    ViewData["Title"] = "ReviewerIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Index</h1>
+
+<br />
+<br />
+@if (Model.Exam.Count() <= 0)
+{
+<div class="backgroundWhite container" style="background-color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+    <div class="border backgroundWhiteBorder">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-info"> There are no registered students from your groups, yet! </h2>
+            </div>
+
+        </div>
+        <br />
+        <div>
+        </div>
+    </div>
+</div>
+}
+else
+{
+
+
+
+<div class="backgroundWhite container" style="background-color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+    <div class="col-12 post @Model.Exam.FirstOrDefault().Reviewer.Replace(" ",string.Empty) menu-restaurant">
+        <div class="row">
+            <h3 class="text-success"> @Model.Exam.FirstOrDefault().Reviewer </h3>
+        </div>
+        <table class="table table-striped border">
+            <tr class="table-secondary">
+                <th>
+                    Student
+                </th>
+                <th>
+                    Group
+                </th>
+                <th>
+                    Promoter
+                </th>
+                <th>
+                    Diploma name
+                </th>
+                <th>
+                    Reviewer
+                </th>
+                <th></th>
+                <th></th>
+                @foreach (var item in Model.Exam)
+                {
+                <tr>
+                    <td>
+                        @{
+                            var studentFullName = item.Student.Name + " " + item.Student.Surname;
+                            @Html.DisplayFor(m => studentFullName)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Group.GroupNumber)
+                    </td>
+                    <td>
+                        @{
+                            var promoterFullName = item.Promoter.Name + " " + item.Promoter.Surname;
+                            @Html.DisplayFor(m => promoterFullName)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Student.DiplomaName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Reviewer)
+                    </td>
+
+                    <td>
+                        <partial name="_ExamDetailsPartial" model="item.StudentId" />
+                    </td>
+                </tr>
+
+
+                 }
+            </table>
+            <div class="p-4"></div>
+        </div>
+
+    </div>
+ }

@@ -1,0 +1,62 @@
+﻿@model Diploma_support_system.Models.ViewModels.IndexExamViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<br />
+<br />
+<div class="backgroundWhite container" style="background-color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+
+
+    @if (Model.Promoter.Count() > 0)
+    {
+
+
+        @foreach (var promoter in Model.Promoter)
+        {
+            if (Model.Exam.Where(u => u.Promoter.Name.Equals(promoter.Name)).ToList().Count < 1)
+            {
+                <div class="border backgroundWhiteBorder">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="text-info"> There are no registered Exams for students from your groups, yet! </h2>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div>
+                    </div>
+                </div>
+            }
+            else
+            {
+
+                <div class="row" id="menu-wrapper">
+                    <partial name="ThumbNailExamAreaPartial" model="@Model.Exam.Where(u => u.Promoter.Name.Equals(promoter.Name))" />
+                </div>
+            }
+
+        }
+    }
+    else
+    {
+       
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-info"> There are no registered Exams for students from your groups, yet! </h2>
+                </div>
+
+            </div>
+            <br />
+            <div>
+            </div>
+   
+    }
+
+
+
+
+</div>

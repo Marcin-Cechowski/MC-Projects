@@ -1,0 +1,110 @@
+﻿@using Diploma_support_system.Utility;  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Diploma Support System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+</head>
+<body class="search-background">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container">
+                @if (User.IsInRole(SD.DeanUser))
+                {
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Diploma Support System</a>
+                }
+                else if (User.IsInRole(SD.PromoterUser))
+                {
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Diploma Support System</a>
+                }
+                else if (User.IsInRole(SD.StudentUser))
+                {
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Diploma Support System</a>
+                }
+                else
+                {
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="MainPage">Diploma Support System</a>
+                }
+             
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+
+                        @if (User.IsInRole(SD.DeanUser))
+                        {
+                            <li class="nav-item dropdown text-white-50">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Content
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Promoter" asp-area="Admin"> Promoters </a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Group" asp-area="Admin"> Groups </a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Student" asp-area="Admin"> Students </a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="User" asp-area="Admin"> Users </a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Exam" asp-area="Admin"> List of exams </a>
+
+                                </div>
+
+                            </li>
+                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                <div class="navbar-nav">
+                                    <a class="nav-item nav-link active" asp-action="IndexExams" asp-area="Admin" asp-controller="Exam">Exam</a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            if (User.IsInRole(SD.StudentUser))
+                            {
+                                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                    <div class="navbar-nav">
+                                        <a class="nav-item nav-link active" asp-action="Index" asp-area="Student" asp-controller="StudentDiploma">Your diploma</a>
+                                        <a class="nav-item nav-link active" asp-action="ExamIndex" asp-area="Student" asp-controller="Exam">Exam</a>
+                                    </div>
+                                </div>
+                            }
+                            else if (User.IsInRole(SD.PromoterUser))
+                            {
+                                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                    <div class="navbar-nav">
+                                        <a class="nav-item nav-link active" asp-action="Create" asp-controller="Promoter" asp-area="Promoter">Your students</a>
+                                        <a class="nav-item nav-link active" asp-action="Index" asp-area="Promoter" asp-controller="Exam">Your Exams</a>
+                                        <a class="nav-item nav-link active" asp-action="ReviewerIndex" asp-controller="Exam" asp-area="Promoter">Your Reviews</a>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top pl-3 footer text-white-50" style="background-color: #343a40;">
+        <div class="container">
+            &copy; 2020 - Diploma Support System - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/5s0a8djb1hv2l6twc7yya6kegcbyw54jchq644ceppdyero5/tinymce/5/tinymce.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@RenderSection("Scripts", required: false)
+</body>
+</html>

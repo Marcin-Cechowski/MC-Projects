@@ -1,0 +1,65 @@
+﻿@model Diploma_support_system.Models.ViewModels.IndexExamViewModel
+
+@{
+    ViewData["Title"] = "ReviewerIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12 post @Model.Exam.FirstOrDefault().Reviewer.Replace(" ",string.Empty) menu-restaurant">
+    <div class="row">
+        <h3 class="text-success"> @Model.Exam.FirstOrDefault().Reviewer </h3>
+    </div>
+    <table class="table table-striped border">
+        <tr class="table-secondary">
+            <th>
+                Student
+            </th>
+            <th>
+                Group
+            </th>
+            <th>
+                Promoter
+            </th>
+            <th>
+                Diploma name
+            </th>
+            <th>
+                Reviewer
+            </th>
+            <th></th>
+            <th></th>
+            @foreach (var item in Model.Exam)
+            {
+            <tr>
+                <td>
+                    @{
+                        var studentFullName = item.Student.Name + " " + item.Student.Surname;
+                        @Html.DisplayFor(m => studentFullName)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Group.GroupNumber)
+                </td>
+                <td>
+                    @{
+                        var promoterFullName = item.Promoter.Name + " " + item.Promoter.Surname;
+                        @Html.DisplayFor(m => promoterFullName)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Student.DiplomaName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Reviewer)
+                </td>
+
+                <td>
+                    <partial name="_ExamDetailsPartial" model="item.StudentId" />
+                </td>
+            </tr>
+
+
+        }
+        </table>
+        <div class="p-4"></div>
+    </div>

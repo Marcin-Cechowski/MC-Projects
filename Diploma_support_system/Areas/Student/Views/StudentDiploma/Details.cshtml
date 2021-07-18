@@ -1,0 +1,225 @@
+﻿@model Diploma_support_system.Models.ViewModels.StudentDiplomaViewModel
+@using Diploma_support_system.Extensions
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Details of Diploma</h2>
+<br />
+
+
+<div class="border backgroundWhiteBorder row">
+    <div class="col-12 border-right">
+        <form method="post" enctype="multipart/form-data" asp-action="Details">
+
+            <input type="hidden" asp-for="Student.Id" id="ddlStudentId" />
+
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Student.Name" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Student.Name" disabled class="form-control" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Student.Surname" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Student.Surname" disabled class="form-control" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Student.DiplomaName" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Student.DiplomaName" disabled class="form-control" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Student.Description" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-9">
+
+                    @Html.TextAreaFor(m => m.Student.Description, new { @disabled = "true", style = "width:250px; ; height: 100px;" })
+
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Student.Diploma" id="ddlDiploma" class="text-info font-weight-bold"></label>
+                </div>
+
+                <td>
+                    <a asp-action="DownloadFile" asp-route-filePath="@Model.Student.Diploma" asp-route-diplomaName="@Model.Student.DiplomaName">Download @Model.Student.Diploma</a>
+                </td>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Student.PromoterId" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-5">
+                    <select asp-for="@Model.Student.PromoterId" disabled id="PromoterId" asp-items="Model.Promoter.ToSelecListItem(Model.Student.GroupId)" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Student.GroupId" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="@Model.Student.Group.GroupNumber" readonly  class="form-control">
+                </div>
+            </div>
+            @*id="GroupId" disabled name="GroupId" asp-items="@(new SelectList(string.Empty, "id", "Name"))"*@
+            <div class="form-group row">
+                <div class="col-3"></div>
+                <div class="col-5" style="">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <form method="post" enctype="multipart/form-data" asp-action="Create">
+        <input type="hidden" asp-for="Student.Id" id="ddlStudentId" />
+
+        <div class="col-12">
+
+
+            <p> Diploma Comments </p>
+            <div class="border backgroundWhiteBorder row " style="overflow:scroll; width:800px;height:500px;">
+                <div class="row col-12 text-justify text-wrap text-break d-none d-md-block" id="ddlCommentList">
+                    
+                </div>
+            </div>
+            @Html.TextAreaFor(m => m.Message.Text, new { style = "-webkit-border-radius:10px;" })
+
+            <br />
+            <br />
+            <div class="form-group row">
+                <div class="col-3"></div>
+
+                <div class="col-12">
+                    <input type="submit" class="btn btn-info form-control" asp-action="Create Message" value="Post Comment" style="border-radius:2.3em; line-height:10px; width:223px; padding:2.4px;" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            getGroup();
+            $('#PromoterId').change(function() {
+                getGroup();
+            });
+        });
+
+        function getGroup() {
+            var url = '@Url.Content("~/")' + "Student/StudentDiploma/GetGroup";
+            var ddlsource = '#PromoterId';
+            $.getJSON(url, { id: $(ddlsource).val() }, function(data) {
+                var items = '';
+                $('#GroupId').empty();
+                $.each(data,
+                    function(i, group) {
+                        items += "<option value='" + group.value + "'>" + group.text + "</option>";
+                    });
+                $('#GroupId').html(items);
+
+            })
+        }
+    </script>
+    @*<script type="text/javascript">
+            $(document).ready(function() {
+                getComments();
+                $('#StudentId').change(function() {
+                    getComments();
+                });
+            });
+
+            function getComments() {
+                var url = '@Url.Content("~/")' + "Promoter/Students/GetComments";
+                var ddlsource = '#StudentId';
+                $.getJSON(url, { id: $(ddlsource).val() }, function(data) {
+                    var items = '';
+                    $('#GroupId').empty();
+                    $.each(data,
+                        function(i, message) {
+                            items += "<option value='" + message.value + "'>" + message.text + "</option>";
+                        });
+                    $('#GroupId').html(items);
+
+                })
+            }
+        </script>*@
+    <script>
+        $(document).ready(function () {
+            $('#ddlDiploma').on("change",
+                function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('#ddlDiploma').html(fileName);
+                });
+        });
+    </script>
+
+    <script>
+        function updateCommentList() {
+            var studentIdSelected = document.getElementById("ddlStudentId").value;
+
+            $list = $('#ddlCommentList');
+
+            $.ajax({
+                url: '/Promoter/Students/GetComments/' + studentIdSelected,
+                type: 'GET',
+                dataType: 'text',
+                success: function (data) {
+                    results = JSON.parse(data);
+                    $list.html('');
+                    //  $list.append('<div class="container"style="border:2px;background-color:#f1f1f1;border-radius:5px;padding:10px;margin:10px 0;">');
+                    //  $list.append('<ul class="list-group">');
+                    for (i in results) {
+
+                        $list.append('<div class="container border-bottom"style="border:2px;border-radius:5px;padding:10px;margin:10px 0;">');
+                        $list.append('<p>' + results[i].value + ":" + " " + results[i].text + '</p>');
+                        $list.append('</div>');
+                    }
+                    // $list.append('</ul>');
+                    //  $list.append('</div>');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            updateCommentList();
+        });
+        $("#ddlStudentId").on("change",
+            function () {
+                updateCommentList();
+            });
+    </script>
+
+   
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

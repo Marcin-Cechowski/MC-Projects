@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Group>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<br />
+<br />
+<div class="border backgroundWhiteBorder">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info"> Group List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp; Create New</a>
+        </div>
+    </div>
+    <br />
+    <div>
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(m => m.GroupNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Promoter.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Promoter.Surname)
+                    </th>
+                    <th></th>
+                    <th></th>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.GroupNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Promoter.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Promoter.Surname)
+                        </td>
+
+                        <td>
+                            <partial name="_TableButtonPartial" model="item.Id" />
+                        </td>
+                    </tr>
+
+
+                }
+                </table>
+            }
+            else
+            {
+                <p>No Sub category exists :p</p>
+            }
+    </div>
+</div>

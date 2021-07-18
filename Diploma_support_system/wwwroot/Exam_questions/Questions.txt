@@ -1,0 +1,13 @@
+1. Co to jest bit, bajt, rekord, plik.
+2. Co to są pliki binarne i pliki tekstowe.
+3. Dlaczego dokładność obliczeń maszyn cyfrowych jest ograniczona.
+4. Wymień zasadnicze części komputera i ich role.
+5. Pamięć operacyjna i jej podstawowe parametry.
+6. Do czego służą urządzenia wejścia i wyjścia.
+7. Podaj przykłady urządzeń peryferyjnych i ich zastosowanie.
+9. Co to jest program źródłowy i wykonywalny.
+10. Co to jest system operacyjny, wymień znane ci systemy.
+11. Co to jest kod ASCII i rozszerzony kod ASCII.
+12. Jakie podstawowe opcje musi zawierać edytor tekstu.
+13. Na czym polega operacja usunięcia pliku.
+14. Wymień kilka typów plików, atrybuty plików.

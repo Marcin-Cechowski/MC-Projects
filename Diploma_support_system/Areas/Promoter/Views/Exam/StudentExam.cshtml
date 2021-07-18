@@ -1,0 +1,159 @@
+﻿@model Diploma_support_system.Models.ViewModels.StudentExamViewModel
+@using Diploma_support_system.Extensions
+
+@{
+    ViewData["Title"] = "StudentExam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info font-weight-bold text-center">@Model.Student.Name  @Model.Student.Surname Diploma Exam</h2>
+<br />
+
+
+<div class="border backgroundWhiteBorder row">
+    <div class="col-12 border-right">
+        <form method="post" enctype="multipart/form-data" asp-action="StudentExam">
+            <h4 class="text-info font-weight-bold">Students Data</h4>
+            <input type="hidden" asp-for="Student.Id" id="ddlStudentId" />
+            <hr />
+            <div class="form-group row ">
+                <div class="col-2 ">
+                    <label asp-for="Student.Name" class="text-info font-weight-bold text-center"></label>
+                </div>
+                <div class="col-3">
+                    <input asp-for="Student.Name" disabled class="form-control text-center" />
+                </div>
+
+                <div class="col-1">
+
+                </div>
+                <div class="col-2 ">
+                    <label asp-for="Student.Surname" class="text-info font-weight-bold text-center"></label>
+                </div>
+                <div class="col-3 ">
+                    <input asp-for="Student.Surname" disabled class="form-control text-center" />
+                </div>
+
+            </div>
+            <hr />
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Student.Promoter.Name" class="text-info font-weight-bold text-center"></label>
+                </div>
+
+                <div class="col-3">
+                    <input asp-for="Student.Promoter.Name" disabled class="form-control text-center" />
+                </div>
+                <div class="col-1"></div>
+                <div class="col-2">
+                    <label asp-for="Student.Promoter.Surname" class="text-info font-weight-bold text-center"></label>
+                </div>
+
+                <div class="col-3">
+                    <input asp-for="Student.Promoter.Surname" disabled class="form-control text-center" />
+                </div>
+
+            </div>
+            <hr />
+            <div class="form-group row ">
+                <div class="col-2">
+                    <label asp-for="Student.DiplomaName" class="text-info font-weight-bold text-center"></label>
+                </div>
+                <div class="col-3">
+                    <input asp-for="Student.DiplomaName" disabled class="form-control text-center" />
+                </div>
+                <div class="col-1"></div>
+                <div class="col-2">
+                    <label asp-for="Student.Group.GroupNumber" class="text-info font-weight-bold text-center"></label>
+                </div>
+
+                <div class="col-3">
+                    <input asp-for="Student.Group.GroupNumber" disabled class="form-control text-center" />
+                </div>
+
+            </div>
+            <hr />
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Exam.Reviewer" class="text-info font-weight-bold text-center"></label>
+                </div>
+
+                <div class="col-3">
+                    <input asp-for="Exam.Reviewer" disabled class="form-control text-center" />
+                </div>
+                <div class="col-1"></div>
+                <div class="col-2">
+                    <label asp-for="Student.Diploma" class="text-info font-weight-bold text-center"></label>
+                </div>
+                <div class="col-3">
+                    <td>
+                        <a asp-action="DownloadFile" asp-route-filePath="@Model.Student.Diploma" asp-route-name="@Model.Student.Name" asp-route-surname="@Model.Student.Surname">Download @Model.Student.Diploma</a>
+                    </td>
+                </div>
+
+            </div>
+            <hr />
+            <hr />
+            <h4 class="text-info font-weight-bold">Exam Questions</h4>
+            <hr />
+
+
+            <div class="form-group  row">
+                <div class="col-12">
+                    <input asp-for="Exam.FirstQuestion" disabled class="form-control text-center" />
+                </div>
+            </div>
+            <div class="form-group shadow-textarea">
+                <textarea class="form-control z-depth-1" readonly asp-for="Exam.FirstAnswer" id="exampleFormControlTextarea6" rows="2" placeholder="First Question Answer..."></textarea>
+            </div>
+
+            <hr />
+            <div class="form-group  row">
+                <div class="col-12">
+                    <input asp-for="Exam.SecoundQuestion" disabled class="form-control text-center" />
+                </div>
+            </div>
+            <div class="form-group shadow-textarea">
+                <textarea class="form-control z-depth-1" readonly asp-for="Exam.SecoundAnswer" id="exampleFormControlTextarea6" rows="2" placeholder="Secound Question Answer..."></textarea>
+            </div>
+            <hr />
+
+
+            <div class="form-group  row">
+                <div class="col-12">
+                    <input asp-for="Exam.ThirdQuestion" disabled class="form-control text-center" />
+                </div>
+            </div>
+            <div class="form-group shadow-textarea">
+                <textarea class="form-control z-depth-1" readonly asp-for="Exam.ThirdAnswer" id="exampleFormControlTextarea6" rows="2" placeholder="Third Question Answer..."></textarea>
+            </div>
+
+            <hr />
+
+            <div class="form-group  row">
+
+                <div class="col-3"></div>
+                <div class="col-5" style="">
+                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+@*@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea'
+
+        });
+    </script>
+}*@
+
+  @*menubar: 'file edit format'*@
+
+

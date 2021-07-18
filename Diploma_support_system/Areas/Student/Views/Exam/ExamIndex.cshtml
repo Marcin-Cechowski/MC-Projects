@@ -1,0 +1,54 @@
+﻿@model Diploma_support_system.Models.ViewModels.StudentExamViewModel
+@{
+    ViewData["Title"] = "ExamIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+<div class="backgroundWhite container" style="background-color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+    @if (Model.Student.ExamDate == null)
+    {
+        <div class="row">
+            <div class="col-12">
+                <br />
+                <br />
+                <h1 class="text-info text-center ">Exam was not created yet! </h1>
+                <br />
+                <h1 class="text-info text-center"> When the exam will be created you will see the date  </h1>
+            </div>
+
+        </div>
+        <br />
+        <div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12">
+                <br />
+                <br />
+                <h1 class="text-info text-center ">Date of Your Exam is : @Model.Student.ExamDate </h1>
+                <br />
+
+                @if (@Model.Exam != null)
+                {
+                    <div class="col-6 text-right">
+                        <a asp-action="StudentExam" class="btn btn-info"> &nbsp; Go to exam</a>
+                    </div>
+                }
+                else
+                {
+                    <h1 class="text-info text-center">See you soon :) </h1>
+                }
+            </div>
+
+        </div>
+        <br />
+        <div>
+        </div>
+
+    }
+
+
+</div>
